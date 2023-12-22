@@ -211,17 +211,16 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
     }
   }
 
-  // 存了坐标后也要重绘
   update();
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
-  // 人下棋，并且不能抢机器的棋
+  // 人下棋
   if (!(game_type == BOT && !game->playerFlag)) {
     chessOneByPerson();
-    // 如果是人机模式，需要调用AI下棋
+    // BOT 下棋
     if (game->gameType == BOT && !game->playerFlag) {
-      // 用定时器做一个延迟
+      // 延时
       QTimer::singleShot(kAIDelay, this, SLOT(chessOneByAI()));
     }
   }
@@ -235,7 +234,6 @@ void MainWindow::chessOneByPerson() {
     game->actionByPerson(clickPosRow, clickPosCol);
     QSound::play(CHESS_ONE_SOUND);
 
-    // 重绘
     update();
   }
 }
